@@ -4,12 +4,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <math.h>
 
 #define MAXOP       100
 #define NUMBER      '0'
 #define PRINTCMD    'p'
 #define SWAP        's'
 #define CLEAR       'c'
+#define SINE        'S'
 #define MAXVAL      100
 #define BUFSISZE    100
 
@@ -76,6 +78,8 @@ int main()
             case CLEAR:
                 clear();
                 break;
+            case SINE:
+                push(sin(pop()));
             default:
                 printf("Error unknown command %s\n", s);
                 break;
@@ -106,11 +110,14 @@ double pop(void)
 int getop(char s[])
 {
     int i,c, sgn;
-
+    char msg[100];
+    msg[1] = '\0';
     sgn = 1;
     while ((s[0]= c = getch()) == ' ' || c == '\t');
     s[1] = '\0';
-    if (!isdigit(c) && c != '.' && c != '-'){
+    if (!isdigit(c) && c != '.' && c != '-' && c != 's'){
+        msg[0] = c;
+        printf("not a digit or . or - or s, got %s\n", msg);
         return c;
     }
     if (c == '-'){
@@ -120,6 +127,24 @@ int getop(char s[])
         if (!isdigit(c)){
             sgn = 1;
             return '-';
+        }
+    } else if (c == 's'){
+        printf("Got an s\n");
+        if ((c = getch()) != 'i'){
+            printf("But no i\n");
+            ungetch(c);
+            return 's';
+        } else {
+            printf("Got an si\n");
+            if ((c = getch()) != 'n'){
+                printf("But not a sin\n");
+                ungetch(c);
+                ungetch('s');
+                return 's';
+            } else {
+                printf("Got a sin\n");
+                return SINE;
+            }
         }
     }
     i = 0;
