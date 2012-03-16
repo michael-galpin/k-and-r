@@ -15,7 +15,8 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-int itoa(int n, char s[]){
+int itoa(int n, char s[])
+{
     int i = 0;
     int pn = n;
     if (n < 0){
