@@ -21,7 +21,7 @@ int itoa(int n, char s[])
     int pn = n;
     if (n < 0){
         s[i++] = '-';
-        pn = -1 * n;
+        pn *= -1;
     }
     if (n/10){
         i = itoa(n/10, s);
