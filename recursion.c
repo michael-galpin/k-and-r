@@ -3,7 +3,6 @@
 
 int itoa(int n, char s[]);
 void reverse(char s[]);
-void reverse_(char s[], int start, int end);
 
 int main(int argc, char* argv[])
 {
@@ -37,20 +36,25 @@ int itoa(int n, char s[])
 
 void reverse(char s[])
 {
-    int i;
-    for (i=0;s[i] != '\0'; i++);
-    reverse_(s,0,i);
-}
+  int i, j;
 
-void reverse_(char s[], int start, int end)
-{
-    int len = end - start;
-    if (len > 1){
-        int temp = s[end-1];
-        s[end-1] = s[start];
-        s[start] = temp;
-        if (len > 2){
-            reverse_(s, start+1, end-1);
-        }
+  // i = length of string
+  for (i=0; s[i] != '\0'; i++);
+
+  // if length is 2 or more
+  if (i > 1) {
+    // rotate string (and null byte) to the left
+    s[i] = s[0];
+    for (j=0; j < i-1; j++) {
+      s[j] = s[j+1];
     }
+    s[i-1] = '\0';
+
+    // recursively reverse
+    reverse(s);
+
+    // bubble up null byte to the right
+    s[i-1] = s[i];
+    s[i] = '\0';
+  }
 }
