@@ -33,9 +33,10 @@ int main()
 		}
 	}
 	quicksort(nums, i);
-	for (num=0;num<i;num++){
-		printf("%d\n", nums[num]);
-	}
+	// for (num=0;num<i;num++){
+	// 	printf("%d\n", nums[num]);
+	// }
+	printf("tn=%d\n",tn);
 	return 0;
 }
 
@@ -46,9 +47,11 @@ void quicksort(int nums[], int len)
 
 void _quicksort(int nums[], int start, int end)
 {
-	if (end - start < 1){
+	int len = end - start + 1;
+	tn += (len -1);
+	if (len < 1){
 		return;
-	} else if (end - start == 1){
+	} else if (len == 1){
 		if (nums[start] > nums[end]){
 			swap(nums, start, end);
 		}
@@ -87,8 +90,15 @@ int partition(int nums[], int start, int end)
 	return pivotBoundary - 1;
 }
 
-
 int choosePivot(int nums[], int start, int end)
 {
-	return start;
+	int len = end - start + 1;
+	int mid = start + (end - start)/2;
+	int value = mid;
+	if ( (nums[start] > nums[mid] && nums[start] < nums[end]) || (nums[start] < nums[mid] && nums[start] > nums[end]) ){
+		value = start;
+	} else if ( (nums[end] > nums[mid] && nums[end] < nums[start]) || (nums[end] < nums[mid] && nums[end] > nums[start]) ){
+		value = end;
+	}
+	return value;
 }
