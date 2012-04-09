@@ -4,11 +4,11 @@ using namespace std;
 
 class Sieve{
 	int max;
-	int * nums;
+	int *nums;
 	int num_primes;
 public:
 	Sieve(int max);
-	int * primes();
+	int* primes();
 	bool is_prime(int n);
 };
 
@@ -17,14 +17,14 @@ Sieve::Sieve(int max){
 	nums = new int[max-1];
 	num_primes = 0;
 	int i;
-	for (i=0; i<max-1; i++){
+	for (i = 0; i < max-1; i++){
 		nums[i] = i + 2;
 	}
-	for (i=0; i<max-1; i++){
+	for (i = 0; i < max - 1; i++){
 		if (nums[i] != 0){
 			num_primes++;
 			int c = 2*nums[i];
-			while (c<=max){
+			while (c <= max){
 				nums[c-2] = 0;
 				c += nums[i];
 			}
@@ -33,9 +33,9 @@ Sieve::Sieve(int max){
 }
 
 int* Sieve::primes(){
-	int * primes = new int[num_primes];
+	int *primes = new int[num_primes];
 	int i,j = 0;
-	for (i=0;i<max-1;i++){
+	for (i = 0; i < max - 1; i++){
 		if (nums[i] != 0){
 			primes[j++] = nums[i];
 		}
@@ -53,14 +53,14 @@ int main(int argc, char* argv[]){
 		max = atoi(argv[1]);
 	}
 	Sieve *sieve = new Sieve(max);
-	for (max = 2; max<argc; max++){
+	for (max = 2; max < argc; max++){
 		int n = atoi(argv[max]);
 		cout << "is " << n << " prime? " << sieve->is_prime(n) << endl;
 	}
-	int * primes = sieve->primes();
+	int *primes = sieve->primes();
 	int i = 0;
-	while (*(i+primes)){
-		cout << *(i+primes) << " ";
-		i++;
+	while (primes[i]){
+		cout << primes[i++] << " ";
 	}
+	cout << endl;
 }
